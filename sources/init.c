@@ -1,38 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkivipur <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/13 09:59:59 by mkivipur          #+#    #+#             */
-/*   Updated: 2020/02/13 10:05:17 by mkivipur         ###   ########.fr       */
+/*   Created: 2020/02/13 14:58:19 by mkivipur          #+#    #+#             */
+/*   Updated: 2020/02/13 14:59:06 by mkivipur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "mlx.h"
-#include "key_macos.h"
 
-int		main(int argc, char **argv)
+void	init(t_list *list, void *mlx_ptr, void *win_ptr)
 {
-	void		*mlx_ptr;
-	int			fd;
-	int			y;
-	int			x;
-
-	mlx_ptr = mlx_init();
-	x = 0;
-	y = 0;
-	if (argc != 2)
-	{
-		ft_putstr("usage: fdf 'input map'\n");
-		return (0);
-	}
-	if (!((fd = open(argv[1], O_RDONLY)) >= 0))
-		error_message2();
-	if (!(read_file(fd, mlx_ptr, x, y)))
-		error_message3();
-	close(fd);
-	return (0);
+	list->win = win_ptr;
+	list->mlx = mlx_ptr;
+	mlx_key_hook(list->win, keypressed, list);
+	list->img = mlx_new_image(list->mlx, list->m_width, list->m_height);
+	list->data_addr = mlx_get_data_addr(list->img, &(list->bits_per_pixel),
+										&(list->size_line), &(list->endian));
+	move_and_draw_coor(&list);
+	mlx_loop(mlx_ptr);
 }

@@ -1,38 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error_messages.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkivipur <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/13 09:59:59 by mkivipur          #+#    #+#             */
-/*   Updated: 2020/02/13 10:05:17 by mkivipur         ###   ########.fr       */
+/*   Created: 2020/02/13 12:53:59 by mkivipur          #+#    #+#             */
+/*   Updated: 2020/02/13 12:55:01 by mkivipur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include "mlx.h"
-#include "key_macos.h"
 
-int		main(int argc, char **argv)
+void	error_message(void)
 {
-	void		*mlx_ptr;
-	int			fd;
-	int			y;
-	int			x;
+	ft_putendl("error: bad map");
+	exit(0);
+}
 
-	mlx_ptr = mlx_init();
-	x = 0;
-	y = 0;
-	if (argc != 2)
-	{
-		ft_putstr("usage: fdf 'input map'\n");
-		return (0);
-	}
-	if (!((fd = open(argv[1], O_RDONLY)) >= 0))
-		error_message2();
-	if (!(read_file(fd, mlx_ptr, x, y)))
-		error_message3();
-	close(fd);
-	return (0);
+void	error_message2(void)
+{
+	ft_putendl("error opening file, probably doesnt exist");
+	exit(0);
+}
+
+void	error_message3(void)
+{
+	ft_putendl("error reading file");
+	exit(0);
+}
+
+void	error_message4(void)
+{
+	ft_putendl("error while allocating memory");
+	exit(0);
 }
